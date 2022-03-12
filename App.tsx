@@ -1,7 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Pressable, Image } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import TinderSwiper from './src/components/TinderSwiper';
 
-const mock = [
+export interface IMock {
+  id: number;
+  source: string;
+}
+
+
+const mock: IMock[] = [
   {
     id: 1,
     source: 'https://placeimg.com/240/240/any'
@@ -20,11 +28,19 @@ const mock = [
   }
 ];
 
+const renderItem = ({ id, source }: IMock) => {
+  return (
+    <View style={{ borderWidth: 4, borderColor: '#fff'}}>
+      <Image source={{uri: source}} style={{height: 300, width: 300}} resizeMode='contain' />
+    </View>
+  )
+}
+
 export default function App() {
   return (
-    <View style={s.container}>
-      <Text>Hello</Text>
-    </View>
+    <GestureHandlerRootView style={s.container}>
+      <TinderSwiper mock={mock} renderItem={(item) => renderItem(item)} />
+    </GestureHandlerRootView>
   )
 }
 
@@ -32,6 +48,7 @@ const s = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: 'deepskyblue'
   }
 });
